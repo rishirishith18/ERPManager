@@ -41,7 +41,15 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex items-center justify-center px-4 sm:px-6 lg:px-8 relative"
+      style={{
+        backgroundImage: `url('/abstract-blur-defocused-bookshelf-library.jpg')`,
+      }}
+    >
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      <div className="relative z-10 w-full">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="flex justify-center">
@@ -57,7 +65,7 @@ const LoginForm: React.FC = () => {
           </p>
         </div>
 
-        <div className="bg-white py-8 px-6 shadow-lg rounded-lg">
+        <div className="bg-white/95 backdrop-blur-sm py-8 px-6 shadow-2xl rounded-lg border border-white/20">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {!isLogin && (
               <div>
@@ -165,7 +173,8 @@ const LoginForm: React.FC = () => {
           </form>
         </div>
 
-        <div className="text-center text-xs text-gray-500">
+        <div className="text-center text-xs bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-white/20 shadow-lg">
+          <div className="text-gray-700">
           <p>
             Role assignment based on email domain:
             <br />
@@ -179,7 +188,9 @@ const LoginForm: React.FC = () => {
             <br />
             @librarian.matrusri.edu.in → Librarian → Library
           </p>
+          </div>
         </div>
+      </div>
       </div>
     </div>
   );
