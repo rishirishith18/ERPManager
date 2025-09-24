@@ -49,8 +49,8 @@ const LoginForm: React.FC = () => {
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-      <div className="relative z-10 w-full">
-      <div className="max-w-md w-full space-y-8">
+      <div className="relative z-10 w-full flex items-center justify-center min-h-screen">
+        <div className="max-w-md w-full space-y-8 mx-auto">
         <div className="text-center">
           <div className="flex justify-center">
             <div className="bg-blue-600 p-3 rounded-full">
@@ -58,7 +58,7 @@ const LoginForm: React.FC = () => {
             </div>
           </div>
           <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Matrusri College ERP
+            EduNex
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             {isLogin ? 'Sign in to your account' : 'Create your account'}
@@ -110,7 +110,7 @@ const LoginForm: React.FC = () => {
                 Use your official college email (@matrusri.edu.in)
               </p>
               <p className="mt-1 text-xs text-blue-600">
-                Demo: Try admin@admin.matrusri.edu.in / password123
+                Demo: admin@matrusri.edu.in or librarian@matrusri.edu.in / password123
               </p>
             </div>
 
@@ -176,21 +176,21 @@ const LoginForm: React.FC = () => {
         <div className="text-center text-xs bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-white/20 shadow-lg">
           <div className="text-gray-700">
           <p>
-            Role assignment based on email domain:
+            Role assignment based on email:
             <br />
-            @student.matrusri.edu.in → Student → My Fees
+            admin@matrusri.edu.in → Admin Dashboard
+            <br />
+            librarian@matrusri.edu.in → Library Management
             <br />
             @faculty.matrusri.edu.in → Faculty → Examinations  
             <br />
-            @admin.matrusri.edu.in → Admin → Analytics
+            @student.matrusri.edu.in → Student → My Fees
             <br />
             @warden.matrusri.edu.in → Warden → Hostel
-            <br />
-            @librarian.matrusri.edu.in → Librarian → Library
           </p>
           </div>
         </div>
-      </div>
+        </div>
       </div>
     </div>
   );

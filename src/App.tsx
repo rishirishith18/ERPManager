@@ -6,6 +6,7 @@ import Layout from './components/Layout';
 import Dashboard from './components/dashboard/Dashboard';
 import AdmissionsModule from './components/modules/AdmissionsModule';
 import FeesModule from './components/modules/FeesModule';
+import LibraryDashboard from './components/library/LibraryDashboard';
 
 const AppContent: React.FC = () => {
   const { user, loading } = useAuth();
@@ -25,7 +26,7 @@ const AppContent: React.FC = () => {
           case 'warden':
             return 'hostel'; // Warden sees hostel management first
           case 'librarian':
-            return 'library'; // Librarian sees library management first
+            return 'library-dashboard'; // Librarian gets their own dashboard
           default:
             return 'dashboard';
         }
@@ -52,6 +53,11 @@ const AppContent: React.FC = () => {
   }
 
   const renderContent = () => {
+    // Show library dashboard for librarian users
+    if (user?.role === 'librarian') {
+      return <LibraryDashboard />;
+    }
+
     switch (activeTab) {
       case 'dashboard':
         return <Dashboard />;
@@ -74,12 +80,7 @@ const AppContent: React.FC = () => {
           </div>
         );
       case 'library':
-        return (
-          <div className="bg-white p-8 rounded-lg shadow">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Library Management</h2>
-            <p className="text-gray-600">Library management features coming soon...</p>
-          </div>
-        );
+        return <LibraryDashboard />;
       case 'users':
         return (
           <div className="bg-white p-8 rounded-lg shadow">
@@ -98,6 +99,11 @@ const AppContent: React.FC = () => {
         return <Dashboard />;
     }
   };
+
+  // Librarian users get their own dashboard without the regular layout
+  if (user?.role === 'librarian') {
+    return renderContent();
+  }
 
   return (
     <Layout activeTab={activeTab} onTabChange={setActiveTab}>

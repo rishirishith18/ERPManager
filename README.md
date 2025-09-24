@@ -1,6 +1,6 @@
-# ERPManager
+# EduNex
 
-A comprehensive College ERP (Enterprise Resource Planning) system built with React, TypeScript, and Supabase.
+A comprehensive Education Management System built with React, TypeScript, and Supabase.
 
 ## Features
 
@@ -41,8 +41,8 @@ A comprehensive College ERP (Enterprise Resource Planning) system built with Rea
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/rishirishith18/ERPManager.git
-cd ERPManager
+git clone https://github.com/rishirishith18/EduNex.git
+cd EduNex
 ```
 
 2. Install dependencies:
@@ -113,7 +113,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-Project Link: [https://github.com/rishirishith18/ERPManager](https://github.com/rishirishith18/ERPManager)
+Project Link: [https://github.com/rishirishith18/EduNex](https://github.com/rishirishith18/EduNex)
 
 ---
 
