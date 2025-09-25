@@ -8,7 +8,6 @@ CREATE POLICY "Allow user creation during signup"
   WITH CHECK (auth.uid() = id);
 
 -- Insert test users directly into users table
--- Note: These users won't have auth.users entries, so they're for demo only
 -- For real users, use the signup form
 
 INSERT INTO users (id, email, name, role, created_at) VALUES
@@ -20,11 +19,3 @@ INSERT INTO users (id, email, name, role, created_at) VALUES
 ON CONFLICT (email) DO NOTHING;
 
 -- For testing with actual Supabase Auth, you should create users via the signup form
--- Here are the test credentials you can use:
-
--- DEMO CREDENTIALS:
--- Student: john.doe@student.matrusri.edu.in / password123
--- Faculty: prof.smith@faculty.matrusri.edu.in / password123  
--- Admin: admin@admin.matrusri.edu.in / password123
--- Warden: warden@warden.matrusri.edu.in / password123
--- Librarian: librarian@librarian.matrusri.edu.in / password123

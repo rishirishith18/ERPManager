@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import { 
   CreditCard, 
   Download, 
@@ -25,11 +26,12 @@ interface FeeTransaction {
 }
 
 const FeesModule: React.FC = () => {
+  const { user } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedTransaction, setSelectedTransaction] = useState<FeeTransaction | null>(null);
 
-  // Mock data
+  // Mock data - Add current user's transaction if they're a student
   const transactions: FeeTransaction[] = [
     {
       id: '1',
@@ -64,7 +66,34 @@ const FeesModule: React.FC = () => {
       status: 'overdue',
       semester: '2',
       year: '2024'
-    }
+    },
+    // Add current student's paid fees if they're logged in as a student
+    ...(user?.role === 'student' ? [
+      {
+        id: '4',
+        studentId: user?.student_id || '16082733185',
+        studentName: user?.name || 'KORIVI RISHIT',
+        feeType: 'Tuition Fee',
+        amount: 30000,
+        dueDate: '2024-01-15',
+        paidDate: '2024-01-10',
+        status: 'paid' as const,
+        semester: '1',
+        year: '2024'
+      },
+      {
+        id: '5',
+        studentId: user?.student_id || '16082733185',
+        studentName: user?.name || 'KORIVI RISHIT',
+        feeType: 'Library Fee',
+        amount: 2000,
+        dueDate: '2024-02-01',
+        paidDate: '2024-01-28',
+        status: 'paid' as const,
+        semester: '1',
+        year: '2024'
+      }
+    ] : [])
   ];
 
   const getStatusColor = (status: string) => {
@@ -95,19 +124,56 @@ const FeesModule: React.FC = () => {
     const matchesSearch = transaction.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          transaction.studentId.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesFilter = filterStatus === 'all' || transaction.status === filterStatus;
+    
+    // For students: show only their own paid fees
+    if (user?.role === 'student') {
+      const isOwnTransaction = transaction.studentId === user?.student_id;
+      const isPaidFee = transaction.status === 'paid';
+      return isOwnTransaction && isPaidFee && matchesSearch && matchesFilter;
+    }
+    
+    // For other roles (admin, faculty): show all transactions based on search and filter
     return matchesSearch && matchesFilter;
   });
 
-  const totalAmount = transactions.reduce((sum, t) => sum + t.amount, 0);
-  const paidAmount = transactions.filter(t => t.status === 'paid').reduce((sum, t) => sum + t.amount, 0);
-  const pendingAmount = transactions.filter(t => t.status !== 'paid').reduce((sum, t) => sum + t.amount, 0);
+  // Calculate statistics based on user role
+  const getStatistics = () => {
+    if (user?.role === 'student') {
+      // For students: show only their own fees
+      const ownTransactions = transactions.filter(t => t.studentId === user?.student_id);
+      const ownPaidTransactions = ownTransactions.filter(t => t.status === 'paid');
+      const ownPendingTransactions = ownTransactions.filter(t => t.status !== 'paid');
+      
+      return {
+        totalAmount: ownTransactions.reduce((sum, t) => sum + t.amount, 0),
+        paidAmount: ownPaidTransactions.reduce((sum, t) => sum + t.amount, 0),
+        pendingAmount: ownPendingTransactions.reduce((sum, t) => sum + t.amount, 0)
+      };
+    } else {
+      // For admin/faculty: show all fees
+      return {
+        totalAmount: transactions.reduce((sum, t) => sum + t.amount, 0),
+        paidAmount: transactions.filter(t => t.status === 'paid').reduce((sum, t) => sum + t.amount, 0),
+        pendingAmount: transactions.filter(t => t.status !== 'paid').reduce((sum, t) => sum + t.amount, 0)
+      };
+    }
+  };
+
+  const { totalAmount, paidAmount, pendingAmount } = getStatistics();
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Fee Management</h1>
-        <p className="text-gray-600">Manage student fee payments and collections</p>
+        <h1 className="text-2xl font-bold text-gray-900">
+          {user?.role === 'student' ? 'My Fee Payments' : 'Fee Management'}
+        </h1>
+        <p className="text-gray-600">
+          {user?.role === 'student' 
+            ? 'View your paid fee transactions and payment history' 
+            : 'Manage student fee payments and collections'
+          }
+        </p>
       </div>
 
       {/* Stats Cards */}
@@ -120,7 +186,9 @@ const FeesModule: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Fees</dt>
+                  <dt className="text-sm font-medium text-gray-500 truncate">
+                    {user?.role === 'student' ? 'Total My Fees' : 'Total Fees'}
+                  </dt>
                   <dd className="text-lg font-medium text-gray-900">₹{totalAmount.toLocaleString()}</dd>
                 </dl>
               </div>
@@ -136,7 +204,9 @@ const FeesModule: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Collected</dt>
+                  <dt className="text-sm font-medium text-gray-500 truncate">
+                    {user?.role === 'student' ? 'Paid by Me' : 'Collected'}
+                  </dt>
                   <dd className="text-lg font-medium text-gray-900">₹{paidAmount.toLocaleString()}</dd>
                 </dl>
               </div>
@@ -152,7 +222,9 @@ const FeesModule: React.FC = () => {
               </div>
               <div className="ml-5 w-0 flex-1">
                 <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Pending</dt>
+                  <dt className="text-sm font-medium text-gray-500 truncate">
+                    {user?.role === 'student' ? 'My Pending' : 'Pending'}
+                  </dt>
                   <dd className="text-lg font-medium text-gray-900">₹{pendingAmount.toLocaleString()}</dd>
                 </dl>
               </div>

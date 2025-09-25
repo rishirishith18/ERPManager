@@ -109,9 +109,6 @@ const LoginForm: React.FC = () => {
               <p className="mt-1 text-xs text-gray-500">
                 Use your official college email (@matrusri.edu.in)
               </p>
-              <p className="mt-1 text-xs text-blue-600">
-                Demo: admin@matrusri.edu.in or librarian@matrusri.edu.in / password123
-              </p>
             </div>
 
             <div>
@@ -173,23 +170,6 @@ const LoginForm: React.FC = () => {
           </form>
         </div>
 
-        <div className="text-center text-xs bg-white/90 backdrop-blur-sm rounded-lg p-4 border border-white/20 shadow-lg">
-          <div className="text-gray-700">
-          <p>
-            Role assignment based on email:
-            <br />
-            admin@matrusri.edu.in → Admin Dashboard
-            <br />
-            librarian@matrusri.edu.in → Library Management
-            <br />
-            @faculty.matrusri.edu.in → Faculty → Examinations  
-            <br />
-            @student.matrusri.edu.in → Student → My Fees
-            <br />
-            @warden.matrusri.edu.in → Warden → Hostel
-          </p>
-          </div>
-        </div>
         </div>
       </div>
     </div>

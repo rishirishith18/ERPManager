@@ -21,11 +21,6 @@ export const validateCollegeDomain = (email: string): boolean => {
 export const extractRoleFromEmail = (email: string): string => {
   if (!email) return 'student';
   
-  // Handle specific email addresses for roles
-  if (email === 'admin@matrusri.edu.in') return 'admin';
-  if (email === 'librarian@matrusri.edu.in') return 'librarian';
-  if (email === 'warden@matrusri.edu.in') return 'warden';
-  
   // Handle subdomain-based roles
   if (email.includes('@faculty.matrusri.edu.in')) return 'faculty';
   if (email.includes('@admin.matrusri.edu.in')) return 'admin';

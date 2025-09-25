@@ -7,6 +7,9 @@ import Dashboard from './components/dashboard/Dashboard';
 import AdmissionsModule from './components/modules/AdmissionsModule';
 import FeesModule from './components/modules/FeesModule';
 import LibraryDashboard from './components/library/LibraryDashboard';
+import HostelDashboard from './components/hostel/HostelDashboard';
+import ResultsPage from './components/results/ResultsPage';
+import AttendanceDashboard from './components/attendance/AttendanceDashboard';
 
 const AppContent: React.FC = () => {
   const { user, loading } = useAuth();
@@ -66,19 +69,11 @@ const AppContent: React.FC = () => {
       case 'fees':
         return <FeesModule />;
       case 'hostel':
-        return (
-          <div className="bg-white p-8 rounded-lg shadow">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Hostel Management</h2>
-            <p className="text-gray-600">Hostel management features coming soon...</p>
-          </div>
-        );
+        return <HostelDashboard />;
       case 'exams':
-        return (
-          <div className="bg-white p-8 rounded-lg shadow">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Examinations</h2>
-            <p className="text-gray-600">Examination management features coming soon...</p>
-          </div>
-        );
+        return <ResultsPage />;
+      case 'attendance':
+        return <AttendanceDashboard />;
       case 'library':
         return <LibraryDashboard />;
       case 'users':
@@ -127,10 +122,6 @@ function App() {
             },
             success: {
               duration: 3000,
-              theme: {
-                primary: 'green',
-                secondary: 'black',
-              },
             },
           }}
         />

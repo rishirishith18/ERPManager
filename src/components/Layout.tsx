@@ -11,7 +11,8 @@ import {
   LogOut,
   User,
   Menu,
-  X
+  X,
+  Calendar
 } from 'lucide-react';
 
 interface LayoutProps {
@@ -47,6 +48,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeTab, onTabChange }) => 
           { id: 'fees', label: 'My Fees', icon: DollarSign },
           { id: 'hostel', label: 'My Room', icon: Building },
           { id: 'exams', label: 'Results', icon: BookOpen },
+          { id: 'attendance', label: 'Attendance', icon: Calendar },
           { id: 'library', label: 'Library', icon: BookOpen },
         ];
       case 'faculty':

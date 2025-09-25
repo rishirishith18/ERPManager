@@ -66,17 +66,6 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 npm run dev
 ```
 
-## Demo Accounts
-
-Test the system with these demo accounts:
-
-| Role | Email | Password | Default Page |
-|------|-------|----------|--------------|
-| Admin | admin@admin.matrusri.edu.in | password123 | Analytics |
-| Student | student@student.matrusri.edu.in | password123 | My Fees |
-| Faculty | teacher@faculty.matrusri.edu.in | password123 | Examinations |
-| Warden | hostel@warden.matrusri.edu.in | password123 | Hostel Management |
-| Librarian | books@librarian.matrusri.edu.in | password123 | Library Management |
 
 ## Email Domain-Based Role Assignment
 
